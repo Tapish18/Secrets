@@ -23,3 +23,24 @@ module.exports.createUser = async function(req,res,err){
     
 
 }
+
+
+module.exports.login = async function(req,res,err){
+    try{
+        const fetchedUser = await User.findOne({
+            email : req.body.username,
+            password : req.body.password
+        })
+
+        if(fetchedUser){
+            console.log("Successfully logged in : ",req.body.username);
+            return res.render("secrets.ejs");
+        }
+
+        console.log("Username/Password Incorect");
+        return res.redirect("back")
+    }catch(err){
+        console.log("Error Occurred : ", err);
+        return res.redirect("back");
+    }
+}

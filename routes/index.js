@@ -9,6 +9,7 @@ const homeController = require("../controller/homeController")
 router.get("/", homeController.showHome);
 router.get("/register", homeController.register);
 router.get("/login", homeController.login);
+router.get("/logout", homeController.showHome);
 
 router.use("/user",userRouter)
 
