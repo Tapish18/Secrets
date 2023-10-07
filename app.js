@@ -3,6 +3,7 @@ const path = require("path")
 const port = 8000
 const ejs = require("ejs")
 const body_parser = require("body-parser")
+const mongoose = require("./config/mongoose");
 
 
 const app = express()
@@ -17,7 +18,7 @@ app.use(body_parser.urlencoded({
 app.set("views", path.join(__dirname,"views"));
 app.set("view engine", "ejs");
 
-app.get("/",Router);
+app.use("/",Router);
 
 
 app.listen(port,function(error){
