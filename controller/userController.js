@@ -1,4 +1,5 @@
 const User = require("../models/user").User
+const encrypt = require("mongoose-encryption")
 
 module.exports.createUser = async function(req,res,err){
     const username = req.body.username
@@ -15,6 +16,7 @@ module.exports.createUser = async function(req,res,err){
             email : req.body.username,
             password : req.body.password
         })
+        createdUser.save();
         console.log("User created Succesfully :", createdUser);
         return res.render("secrets.ejs")
     } catch (error) {
@@ -29,15 +31,18 @@ module.exports.login = async function(req,res,err){
     try{
         const fetchedUser = await User.findOne({
             email : req.body.username,
-            password : req.body.password
+        //     password : req.body.password
         })
 
         if(fetchedUser){
-            console.log("Successfully logged in : ",req.body.username);
-            return res.render("secrets.ejs");
+            
+            if(req.body.password === fetchedUser.password){
+                console.log("Successfully logged in : ",req.body.username);
+                return res.render("secrets.ejs");
+            }
         }
 
-        console.log("Username/Password Incorect");
+        console.log("Username/Password Incorrect");
         return res.redirect("back")
     }catch(err){
         console.log("Error Occurred : ", err);
