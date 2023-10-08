@@ -4,6 +4,7 @@ const port = 8000
 const ejs = require("ejs")
 const body_parser = require("body-parser")
 const mongoose = require("./config/mongoose");
+const encryption = require("mongoose-encryption")
 
 
 const app = express()

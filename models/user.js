@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-
+const encrypt = require("mongoose-encryption")
 const userSchema = new mongoose.Schema({
     email : {
         type : String,
@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema({
 },{
     timestamps : true
 })
+
+const secret = "Iwillnotettledownuntillisucceed."
+userSchema.plugin(encrypt , {secret : secret , encryptedFields : ['password']});
 
 
 module.exports.User = mongoose.model("User",userSchema);
