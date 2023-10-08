@@ -1,4 +1,5 @@
 const User = require("../models/user").User
+const md5 =  require("md5");
 const encrypt = require("mongoose-encryption")
 
 module.exports.createUser = async function(req,res,err){
@@ -14,9 +15,9 @@ module.exports.createUser = async function(req,res,err){
 
         const createdUser = await User.create({
             email : req.body.username,
-            password : req.body.password
+            password : md5(req.body.password)
         })
-        createdUser.save();
+        // createdUser.save();
         console.log("User created Succesfully :", createdUser);
         return res.render("secrets.ejs")
     } catch (error) {
@@ -36,7 +37,7 @@ module.exports.login = async function(req,res,err){
 
         if(fetchedUser){
             
-            if(req.body.password === fetchedUser.password){
+            if(md5(req.body.password) === fetchedUser.password){
                 console.log("Successfully logged in : ",req.body.username);
                 return res.render("secrets.ejs");
             }
